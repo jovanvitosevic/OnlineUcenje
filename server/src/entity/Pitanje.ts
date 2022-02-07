@@ -30,5 +30,5 @@ export class Pitanje {
 
 export interface Opcija {
   naziv: string,
-  tacna: number
+  tacna: boolean
 }

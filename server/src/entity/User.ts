@@ -1,6 +1,5 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToMany, JoinTable, OneToMany } from "typeorm";
-import { EncryptionTransformer } from 'typeorm-encrypted'
-import { Kurs } from "./Kurs";
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from "typeorm";
+import { EncryptionTransformer } from 'typeorm-encrypted';
 import { Pokusaj } from "./Pokusaj";
 
 @Entity()
@@ -22,6 +21,7 @@ export class User {
     username: string;
 
     @Column({
+        select: false,
         transformer: new EncryptionTransformer({
             key: 'e41c966f21f9e157780246fff924e6a3feddd751f201304213b2f845d8841a61',
             algorithm: 'aes-256-cbc',
@@ -33,11 +33,6 @@ export class User {
 
     @Column()
     category: 'user' | 'admin';
-
-    @ManyToMany(t => Kurs)
-    @JoinTable({ name: 'slusanje' })
-    kursevi: Kurs[];
-
 
     @OneToMany(() => Pokusaj, p => p.user)
     pokusaji: Pokusaj[];
