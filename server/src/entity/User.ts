@@ -31,7 +31,9 @@ export class User {
     })
     password: string;
 
-    @Column()
+    @Column({
+        default: 'user'
+    })
     category: 'user' | 'admin';
 
     @OneToMany(() => Pokusaj, p => p.user)

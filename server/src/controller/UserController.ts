@@ -4,10 +4,11 @@ import { User } from "../entity/User";
 
 export class UserController {
 
-    private userRepository = getRepository(User);
+
 
     public async login(request: Request, response: Response) {
-        const user = await this.userRepository.findOne({
+        const userRepository = getRepository(User);
+        const user = await userRepository.findOne({
             where: {
                 username: request.body.username,
                 password: request.body.password
@@ -20,10 +21,16 @@ export class UserController {
             return;
         }
         (request.session as any).user = user;
+        request.session.save(e => {
+            if (e) {
+                console.log(e);
+            }
+        });
         response.json(user);
     }
     public async register(request: Request, response: Response) {
-        let user = await this.userRepository.findOne({
+        const userRepository = getRepository(User);
+        let user = await userRepository.findOne({
             where: {
                 username: request.body.username
             }
@@ -34,10 +41,18 @@ export class UserController {
             });
             return;
         }
-        const insertResult = await this.userRepository.insert(request.body);
+        const insertResult = await userRepository.insert({
+            ...request.body,
+            category: 'user'
+        });
         const id = insertResult.identifiers[0].id;
-        user = await this.userRepository.findOne(id);
+        user = await userRepository.findOne(id);
         (request.session as any).user = user;
+        request.session.save(e => {
+            if (e) {
+                console.log(e);
+            }
+        });
         response.json(user);
     }
 
@@ -49,5 +64,10 @@ export class UserController {
             }
         });
         response.sendStatus(204);
+    }
+
+    public async check(request: Request, response: Response) {
+        const user = (request.session as any).user;
+        response.json(user)
     }
 }

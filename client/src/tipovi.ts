@@ -7,14 +7,30 @@ export interface User {
   category: 'user' | 'admin',
   pokusaji?: Pokusaj[]
 }
+
+export interface RegisterUser {
+  firstName: string,
+  lastName: string,
+  age: number | string,
+  username: string,
+  password: string,
+  repeat?: string
+}
+export interface LoginUser {
+  username: string,
+  password: string,
+}
 export interface Kurs {
   id: number,
-  naziv: string
+  naziv: string,
+  opis: string
 }
 export interface Kviz {
   id: number,
   naziv: string,
-  kurs?: Kurs[]
+  kurs?: Kurs,
+  pitanja: Pitanje[],
+  pokusaj?: Pokusaj
 }
 export interface Pitanje {
   id: number,

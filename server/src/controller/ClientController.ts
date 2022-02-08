@@ -4,6 +4,7 @@ import { Kurs } from "../entity/Kurs";
 import { Kviz } from "../entity/Kviz";
 import { Pitanje } from "../entity/Pitanje";
 import { Pokusaj } from "../entity/Pokusaj";
+import { User } from "../entity/User";
 
 
 
@@ -13,13 +14,27 @@ export async function vratiSveKurseve(req: Request, res: Response) {
 }
 export async function vratiSveKvizoveIzKursa(req: Request, res: Response) {
   const kvizRepository = getRepository(Kviz);
-  res.json(await kvizRepository.find({
+  const kvizovi = await kvizRepository.find({
     where: {
       kurs: {
         id: req.params.id
       }
     }
-  }));
+  })
+  const user = (req.session as any).user as User;
+  const rezultat = await Promise.all(kvizovi.map(async kviz => {
+    const pokusaji = await getRepository(Pokusaj).find({
+      where: {
+        kvizId: kviz.id,
+        userId: user.id
+      }
+    })
+    return {
+      ...kviz,
+      pokusaj: (pokusaji.length === 0) ? undefined : pokusaji[pokusaji.length - 1]
+    }
+  }))
+  res.json(rezultat);
 }
 export async function vratiSvaPitanjaIzKviza(req: Request, res: Response) {
   const pitanjeRepository = getRepository(Pitanje)

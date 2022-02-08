@@ -1,14 +1,19 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, ButtonToolbar, Container, Content, FlexboxGrid, Form, Panel, Schema } from 'rsuite';
+import { LoginUser } from '../tipovi';
 
 const model = Schema.Model({
   username: Schema.Types.StringType().isRequired(),
   password: Schema.Types.StringType().isRequired(),
 });
 
-export default function LoginPage() {
-  const [forma, setForma] = useState({
+interface Props {
+  onSubmit: (u: LoginUser) => Promise<void>
+}
+
+export default function LoginPage(props: Props) {
+  const [forma, setForma] = useState<LoginUser>({
     username: '',
     password: ''
   });
@@ -25,6 +30,12 @@ export default function LoginPage() {
                   onChange={value => {
                     //@ts-ignore
                     setForma(value);
+                  }}
+                  onSubmit={(check) => {
+                    if (!check) {
+                      return;
+                    }
+                    props.onSubmit(forma);
                   }}
                   fluid>
                   <Form.Group>

@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Button, ButtonToolbar, Container, Content, FlexboxGrid, Form, Panel, Schema } from 'rsuite';
+import { RegisterUser, User } from '../tipovi';
 
 const model = Schema.Model({
   username: Schema.Types.StringType().isRequired(),
@@ -13,14 +14,18 @@ const model = Schema.Model({
   age: Schema.Types.NumberType().isRequired().min(9),
 });
 
-export default function RegisterPage() {
-  const [forma, setForma] = useState({
+interface Props {
+  onSubmit: (val: RegisterUser) => Promise<void>
+}
+
+export default function RegisterPage(props: Props) {
+  const [forma, setForma] = useState<RegisterUser>({
     username: '',
     password: '',
     repeat: '',
     firstName: '',
     lastName: '',
-    age: ''
+    age: 13
   });
   return (
     <div className="show-fake-browser login-page">
@@ -36,6 +41,12 @@ export default function RegisterPage() {
                   onChange={value => {
                     //@ts-ignore
                     setForma(value);
+                  }}
+                  onSubmit={(check) => {
+                    if (!check) {
+                      return;
+                    }
+                    props.onSubmit(forma);
                   }}
                   fluid>
                   <Form.Group>

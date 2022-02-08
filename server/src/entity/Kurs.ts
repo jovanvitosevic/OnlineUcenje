@@ -9,4 +9,9 @@ export class Kurs {
 
   @Column()
   naziv: string;
+
+  @Column({
+    type: 'text'
+  })
+  opis: string;
 }
