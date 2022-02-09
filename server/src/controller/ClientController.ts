@@ -100,20 +100,21 @@ export async function vratiSveKvizove(req: Request, res: Response) {
   const page = (req.query as any).page || 0;
   const naziv = (req.query as any).naziv || '';
   const sortType = (req.query as any).sortType || 'ASC';
+  const sortColumn = (req.query as any).sortColumn || 'id';
   const kvizRepository = getRepository(Kviz);
-  const kvizovi = await kvizRepository.find({
+  const [kvizovi, total] = await kvizRepository.findAndCount({
     relations: ['kurs'],
     where: {
-      naziv: Like(naziv)
+      naziv: Like(naziv + '%')
     },
     order: {
-      naziv: sortType
+      [sortColumn]: sortType
     },
     take: size,
     skip: page * size
   })
   res.json({
     content: kvizovi,
-    totalElements: await kvizRepository.count()
+    totalElements: total
   });
 }

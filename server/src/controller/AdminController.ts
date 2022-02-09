@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { getRepository } from "typeorm";
+import { getManager, getRepository } from "typeorm";
 import { Kurs } from "../entity/Kurs";
 import { Kviz } from '../entity/Kviz'
 import { Pitanje } from "../entity/Pitanje";
@@ -13,8 +13,13 @@ export async function kreirajKurs(req: Request, res: Response) {
 }
 export async function obrisiKurs(req: Request, res: Response) {
   const kursRepository = getRepository(Kurs);
-  await kursRepository.delete(req.params.id);
-  res.sendStatus(204);
+  try {
+
+    await kursRepository.delete(req.params.id);
+    res.sendStatus(204);
+  } catch (error) {
+    res.sendStatus(500);
+  }
 }
 
 export async function kreirajKviz(req: Request, res: Response) {
@@ -27,6 +32,14 @@ export async function obrisiKviz(req: Request, res: Response) {
   const kvizRepository = getRepository(Kviz);
   await kvizRepository.delete(req.params.id);
   res.sendStatus(204);
+}
+
+export async function vratiSvaPitanja(req: Request, res: Response) {
+  res.json(
+    await getRepository(Pitanje).find({
+      relations: ['kviz']
+    })
+  )
 }
 
 export async function kreirajPitanje(req: Request, res: Response) {
@@ -46,9 +59,14 @@ export async function izmeniPitanje(req: Request, res: Response) {
   const body = req.body;
   const pitanje = await getRepository(Pitanje).save({
     ...body,
-    id
+    id: parseInt(id)
   });
-  res.json(pitanje);
+  const kviz = await getRepository(Kviz).findOne({
+    where: {
+      id: body.kviz.id
+    }
+  })
+  res.json({ ...pitanje, kviz });
 }
 
 export async function vratiSveKorisnike(req: Request, res: Response) {

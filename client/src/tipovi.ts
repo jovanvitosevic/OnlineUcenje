@@ -38,8 +38,31 @@ export interface Pitanje {
   brojPoena: number,
   opcije: string[]
 }
+export interface Opcija {
+  naziv: string,
+  tacna: boolean
+}
+export interface AdminPitanje {
+  id: number,
+  kviz: Kviz,
+  tekstPitanja: string,
+  brojPoena: number,
+  opcije: Opcija[]
+}
 export interface Pokusaj {
   brojPoena: number,
   userId: number,
   kvizId: number
+}
+
+export interface KvizSearch {
+  size: number,
+  page: number,
+  naziv: string,
+  sortType: 'ASC' | 'DESC',
+  sortColumn: 'id' | 'naziv',
+}
+export interface KvizOdgovor {
+  totalElements: number,
+  content: Kviz[]
 }

@@ -16,3 +16,7 @@ export async function kreirajKurs(kurs: Partial<Kurs>) {
   const res = await axios.post(SERVER_URL + '/kurs', kurs);
   return res.data;
 }
+
+export async function obrisiKurs(id: number) {
+  await axios.delete(SERVER_URL + '/kurs/' + id);
+}

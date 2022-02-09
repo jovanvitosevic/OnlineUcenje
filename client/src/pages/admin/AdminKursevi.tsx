@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Button, FlexboxGrid, Form, IconButton, Input, Schema, Table } from 'rsuite';
-import { kreirajKurs, vratiSveKurseve } from '../../servis/kursServis';
+import { Button, FlexboxGrid, Form, IconButton, Input, Message, Schema, Table, toaster } from 'rsuite';
+import { kreirajKurs, obrisiKurs, vratiSveKurseve } from '../../servis/kursServis';
 import { Kurs } from '../../tipovi';
 import TrashIcon from '@rsuite/icons/Trash';
 
@@ -47,10 +47,17 @@ export default function AdminKursevi() {
               <Table.HeaderCell>Obrisi</Table.HeaderCell>
               <Table.Cell>
                 {
-                  kviz => {
+                  kurs => {
                     return (
-                      <IconButton onClick={e => {
-                        console.log(kviz);
+                      <IconButton onClick={async () => {
+                        try {
+                          await obrisiKurs(kurs.id)
+                          setKursevi(prev => {
+                            return prev.filter(e => e.id !== kurs.id);
+                          })
+                        } catch (error) {
+                          toaster.push(<Message showIcon type='error' >Ne moze se obrisati izabrani kurs</Message>, { placement: 'topCenter' })
+                        }
                       }} icon={<TrashIcon />} />
                     )
                   }

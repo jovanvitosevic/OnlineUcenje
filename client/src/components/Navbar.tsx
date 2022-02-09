@@ -27,7 +27,7 @@ export default function AppNavbar(props: Props) {
         props.isAdmin && (
           <>
             <Nav.Item>
-              <NavLink to='/pitanje'>
+              <NavLink to='/pitanja'>
                 Pitanja
               </NavLink>
             </Nav.Item>

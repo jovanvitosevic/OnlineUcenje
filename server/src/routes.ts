@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { izmeniPitanje, kreirajKurs, kreirajKviz, kreirajPitanje, obrisiKurs, obrisiKviz, obrisiPitanje, vratiSveKorisnike } from "./controller/AdminController";
+import { izmeniPitanje, kreirajKurs, kreirajKviz, kreirajPitanje, obrisiKurs, obrisiKviz, obrisiPitanje, vratiSvaPitanja, vratiSveKorisnike } from "./controller/AdminController";
 import { submitujKviz, vratiSvaPitanjaIzKviza, vratiSveKurseve, vratiSveKvizove, vratiSveKvizoveIzKursa } from "./controller/ClientController";
 
 
@@ -48,7 +48,13 @@ export const AdminRoutes: Route[] = [{
   method: 'delete',
   url: '/kviz/:id',
   handler: obrisiKviz
-}, {
+},
+{
+  method: 'get',
+  url: '/pitanje',
+  handler: vratiSvaPitanja
+},
+{
   method: "post",
   url: '/pitanje',
   handler: kreirajPitanje

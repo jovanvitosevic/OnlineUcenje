@@ -49,3 +49,20 @@
 .fluid {
   width: 100%;
 }
+.fluid > * {
+  width: 100% !important;
+}
+.marginBotton {
+  margin-bottom: 30px;
+}
+.marginTop {
+  margin-top: 30px;
+}
+.selekotvaniRed > div > div {
+  background-color: lightblue;
+}
+.danger {
+  background-color: rgb(250, 15, 15) !important;
+  color: white !important;
+  font-weight: 600;
+}
