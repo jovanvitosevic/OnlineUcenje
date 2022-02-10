@@ -66,3 +66,7 @@ export interface KvizOdgovor {
   totalElements: number,
   content: Kviz[]
 }
+export interface OdgovorDto {
+  id: number,
+  selektovaneOpcije: string[]
+}

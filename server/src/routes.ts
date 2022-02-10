@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import { izmeniPitanje, kreirajKurs, kreirajKviz, kreirajPitanje, obrisiKurs, obrisiKviz, obrisiPitanje, vratiSvaPitanja, vratiSveKorisnike } from "./controller/AdminController";
+import { izmeniPitanje, kreirajKurs, kreirajKviz, kreirajPitanje, obrisiKurs, obrisiKviz, obrisiPitanje, vratiStatistiku, vratiSvaPitanja } from "./controller/AdminController";
 import { submitujKviz, vratiSvaPitanjaIzKviza, vratiSveKurseve, vratiSveKvizove, vratiSveKvizoveIzKursa } from "./controller/ClientController";
 
 
@@ -68,6 +68,6 @@ export const AdminRoutes: Route[] = [{
   handler: obrisiPitanje
 }, {
   method: 'get',
-  url: '/user',
-  handler: vratiSveKorisnike
+  url: '/statistika',
+  handler: vratiStatistiku
 }]

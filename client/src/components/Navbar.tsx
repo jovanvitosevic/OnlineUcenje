@@ -17,15 +17,15 @@ export default function AppNavbar(props: Props) {
             Kursevi
           </NavLink>
         </Nav.Item>
-        <Nav.Item>
-          <NavLink to='/kvizovi'>
-            Kvizovi
-          </NavLink>
-        </Nav.Item>
       </Nav>
       {
         props.isAdmin && (
           <>
+            <Nav.Item>
+              <NavLink to='/kvizovi'>
+                Kvizovi
+              </NavLink>
+            </Nav.Item>
             <Nav.Item>
               <NavLink to='/pitanja'>
                 Pitanja

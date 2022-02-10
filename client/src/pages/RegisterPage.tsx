@@ -33,7 +33,7 @@ export default function RegisterPage(props: Props) {
         <Content className='spusteno'>
           <FlexboxGrid justify="center">
             <FlexboxGrid.Item colspan={12}>
-              <Panel header={<h3>Registracija</h3>} bordered>
+              <Panel className='gray' header={<h3>Registracija</h3>} bordered>
                 <Form
                   checkTrigger='blur'
                   formValue={forma}

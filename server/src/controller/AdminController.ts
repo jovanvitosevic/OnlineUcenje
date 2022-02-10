@@ -3,6 +3,7 @@ import { getManager, getRepository } from "typeorm";
 import { Kurs } from "../entity/Kurs";
 import { Kviz } from '../entity/Kviz'
 import { Pitanje } from "../entity/Pitanje";
+import { Pokusaj } from "../entity/Pokusaj";
 import { User } from "../entity/User";
 
 export async function kreirajKurs(req: Request, res: Response) {
@@ -45,8 +46,13 @@ export async function vratiSvaPitanja(req: Request, res: Response) {
 export async function kreirajPitanje(req: Request, res: Response) {
   const pitanjeRepository = getRepository(Pitanje);
 
-  const kviz = await pitanjeRepository.save(req.body);
-  res.json(kviz);
+  const pitanje = await pitanjeRepository.save(req.body);
+  const kviz = await getRepository(Kviz).findOne({
+    where: {
+      id: req.body.kviz.id
+    }
+  })
+  res.json({ ...pitanje, kviz });
 }
 export async function obrisiPitanje(req: Request, res: Response) {
   const pitanjeRepository = getRepository(Pitanje);
@@ -69,12 +75,33 @@ export async function izmeniPitanje(req: Request, res: Response) {
   res.json({ ...pitanje, kviz });
 }
 
-export async function vratiSveKorisnike(req: Request, res: Response) {
-  const korisnici = await getRepository(User).find({
-    where: {
-      category: 'user'
-    },
-    relations: ['pokusaji']
-  });
-  res.json(korisnici);
+interface StatistikaItem {
+  idKviza: number,
+  nazivKviza: string,
+  prosek: number,
+  maks: number,
+  brojPokusaja: number
+}
+
+export async function vratiStatistiku(req: Request, res: Response) {
+  let itemi: StatistikaItem[] = [];
+  const pokusaji = await getRepository(Pokusaj).find();
+  const kvizovi = await getRepository(Kviz).find();
+  for (let pokusaj of pokusaji) {
+    let item = itemi.find(e => e.idKviza === pokusaj.kvizId);
+    const kviz = kvizovi.find(e => e.id === pokusaj.kvizId);
+    if (!item) {
+      item = {
+        brojPokusaja: 0,
+        idKviza: kviz.id,
+        nazivKviza: kviz.naziv,
+        maks: kviz.pitanja.reduce((acc, element) => { return acc + element.brojPoena }, 0),
+        prosek: 0
+      }
+      itemi.push(item)
+    }
+    item.prosek = (item.prosek * item.brojPokusaja + pokusaj.brojPoena) / (item.brojPokusaja + 1);
+    item.brojPokusaja = item.brojPokusaja + 1;
+  }
+  res.json(itemi);
 }

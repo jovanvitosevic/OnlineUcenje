@@ -37,7 +37,7 @@ export default function AdminKvizovi() {
     }))
   }
   return (
-    <div className='ekran maliPadding'>
+    <div className='ekran white maliPadding'>
       <h1 style={{ textAlign: 'center', width: '100%' }} >Spisak kvizova - ADMIN</h1>
 
       <FlexboxGrid className='maliPadding' justify='space-between'>

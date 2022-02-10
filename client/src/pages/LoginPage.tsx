@@ -23,7 +23,7 @@ export default function LoginPage(props: Props) {
         <Content className='spusteno'>
           <FlexboxGrid justify="center">
             <FlexboxGrid.Item colspan={12}>
-              <Panel header={<h3>Login</h3>} bordered>
+              <Panel className='gray' header={<h3>Login</h3>} bordered>
                 <Form
                   formValue={forma}
                   model={model}

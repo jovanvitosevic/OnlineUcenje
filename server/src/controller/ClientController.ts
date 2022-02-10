@@ -78,15 +78,15 @@ export async function submitujKviz(req: Request, res: Response) {
     for (let opcija of pitanje.opcije) {
       const pogodio = odgovor.selektovaneOpcije.includes(opcija.naziv) === opcija.tacna;
       if (pogodio) {
-        rezultatPitanja = rezultatPitanja + 1 / pitanje.opcije.length;
+        rezultatPitanja = rezultatPitanja + 1;
       } else {
-        rezultatPitanja = rezultatPitanja - 1 / pitanje.opcije.length;
+        rezultatPitanja = rezultatPitanja - 1;
       }
     }
-    rezultat = rezultatPitanja * pitanje.brojPoena;
+    rezultat += rezultatPitanja * pitanje.brojPoena / pitanje.opcije.length;
   }
   const pokusajRepository = getRepository(Pokusaj);
-  await pokusajRepository.insert({
+  await pokusajRepository.save({
     brojPoena: rezultat,
     kvizId: Number(id),
     userId: (req.session as any).user.id,

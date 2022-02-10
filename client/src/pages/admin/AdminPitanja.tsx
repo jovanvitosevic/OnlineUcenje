@@ -49,8 +49,8 @@ export default function AdminPitanja() {
   }, [selPitanjeId])
 
   return (
-    <div className='ekran maliPadding'>
-      <h1 style={{ textAlign: 'center', width: '100%' }} >Spisak kurseva - ADMIN</h1>
+    <div className='ekran white maliPadding'>
+      <h1 style={{ textAlign: 'center', width: '100%' }} >Spisak pitanja - ADMIN</h1>
 
       <FlexboxGrid className='maliPadding' justify='space-between'>
         <FlexboxGrid.Item colspan={14}>
@@ -123,6 +123,12 @@ export default function AdminPitanja() {
               if (!ch) {
                 return;
               }
+              if (formaPitanje.opcije.find((element: Opcija) => {
+                return element.naziv.trim().length === 0 && formaPitanje.find((e1: Opcija) => e1.naziv === element.naziv && e1 !== element) != undefined;
+              }) !== undefined) {
+                return;
+              }
+
               if (selPitanjeId === 0) {
                 const novoPitanje = await kreirajPitanje({
                   ...formaPitanje,

@@ -20,7 +20,7 @@ export default function AdminKursevi() {
   }, [])
 
   return (
-    <div className='ekran maliPadding'>
+    <div className='ekran maliPadding white'>
       <h1 style={{ textAlign: 'center', width: '100%' }} >Spisak kurseva - ADMIN</h1>
 
       <FlexboxGrid className='maliPadding' justify='space-between'>

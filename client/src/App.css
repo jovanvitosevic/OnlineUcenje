@@ -13,6 +13,7 @@
   margin-top: 20px;
   height: 140px;
   border-radius: 10px;
+  background-color: lightgray;
 }
 .kursKarticaContainer:hover {
   box-shadow: 0 4px 11px rgb(0, 0, 59);
@@ -29,6 +30,8 @@
 }
 .ekran {
   padding: 0 10%;
+  margin-top: 20px;
+  min-height: 90vh;
 }
 .kursNaziv {
   font-size: 21px;
@@ -65,4 +68,39 @@
   background-color: rgb(250, 15, 15) !important;
   color: white !important;
   font-weight: 600;
+}
+.pitanjeContainer {
+  padding: 50px 10px;
+  margin-bottom: 10px;
+  border-bottom: 1px ridge rgb(0, 0, 59);
+  border-top: 1px ridge rgb(0, 0, 59);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background-color: lightgray;
+}
+.textPitanja {
+  font-size: 21px;
+  font-weight: 600;
+}
+.opcijeTekst {
+  padding: 20px 0;
+  font-size: 19px;
+}
+.odgovor {
+  font-size: 17px;
+}
+.textCentar {
+  text-align: center;
+  font-size: 25px;
+}
+.center {
+  display: flex;
+  justify-content: center;
+}
+.gray {
+  background-color: lightgray;
+}
+.white {
+  background-color: white;
 }

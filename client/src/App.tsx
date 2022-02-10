@@ -10,6 +10,7 @@ import AdminPitanja from './pages/admin/AdminPitanja';
 import AdminStatistika from './pages/admin/AdminStatistika';
 import KurseviPage from './pages/KurseviPage';
 import KursPage from './pages/KursPage';
+import KvizPage from './pages/KvizPage';
 import LoginPage from './pages/LoginPage';
 import RegisterPage from './pages/RegisterPage';
 import { check, login, logout, register } from './servis/loginServis';
@@ -60,6 +61,7 @@ function App() {
         <Routes>
           <Route path='/kursevi' element={<KurseviPage />} />
           <Route path='/kursevi/:id' element={<KursPage />} />
+          <Route path='/kviz/:id' element={<KvizPage />} />
           <Route path='/' element={<KurseviPage />} />
         </Routes>
       </>
