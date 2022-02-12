@@ -8,6 +8,7 @@ import AdminKursevi from './pages/admin/AdminKursevi';
 import AdminKvizovi from './pages/admin/AdminKvizovi';
 import AdminPitanja from './pages/admin/AdminPitanja';
 import AdminStatistika from './pages/admin/AdminStatistika';
+import HomePage from './pages/HomePage';
 import KurseviPage from './pages/KurseviPage';
 import KursPage from './pages/KursPage';
 import KvizPage from './pages/KvizPage';
@@ -62,7 +63,7 @@ function App() {
           <Route path='/kursevi' element={<KurseviPage />} />
           <Route path='/kursevi/:id' element={<KursPage />} />
           <Route path='/kviz/:id' element={<KvizPage />} />
-          <Route path='/' element={<KurseviPage />} />
+          <Route path='*' element={<HomePage />} />
         </Routes>
       </>
     )
